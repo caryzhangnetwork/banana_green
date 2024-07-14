@@ -1,0 +1,135 @@
+.editItem {
+  position: relative;
+  border: 1px solid gray;
+  margin: .6rem;
+  padding: 13px 10px;
+  text-align: center;
+}
+.generalItemContainer {
+  display: flex;
+  margin: .6rem;
+}
+.itemCheckBox {
+  border-radius: 50%;
+  border: 1px solid gray;
+  height: 40px;
+  width: 40px;
+  margin: 2px 10px;
+}
+.generalItem {
+  flex: 6;
+  position: relative;
+  border: 1px solid gray;
+  padding: 13px 10px;
+  text-align: center;
+}
+.addItemBtn {
+  text-align: center;
+  height: 50px;
+  margin: 0 45%;
+  margin-top: 1rem;
+}
+.statusBtn {
+  display: inline-block;
+  border-radius: 10px;
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  padding: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+.statusStart {
+  background: rgb(27, 164, 27);
+}
+.statusEnd {
+  background: rgb(202, 7, 36);
+}
+.statusCancel {
+  background: rgb(114, 114, 114);
+  right: 65px;
+}
+.itemRemoveBtn {
+  position: absolute;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  height: 18px;
+  width: 18px;
+  line-height: 15px;
+  font-size: 25px;
+  top: calc(50% - 13px);
+  cursor: pointer;
+  outline: none;
+}
+.itemRemoveBtn:focus {
+  outline: none;
+}
+.removeBtn {
+  background: #969696e0;
+  right: 20px;
+}
+.cancelRemoveBtn {
+  background: #00aa00;
+  right: 20px;
+}
+.confirmRemoveBtn {
+  background: #ff5353;
+  line-height: 8px;
+  right: 65px;
+}
+.pageHeader {
+  position: relative;
+  display: flex;
+  padding: 20px;
+}
+.headerBlock {
+  display: inline-block;
+  text-align: center;
+  padding: 0;
+}
+.pageTypeTag {
+  flex: 1;
+  border: 1px solid gray;
+  padding: 5px;
+  font-size: 15px;
+  height: 18px;
+}
+.pageTitle {
+  flex: 7;
+  font-weight: bold;
+}
+.pageActionTag {
+  flex: 1;
+  padding: 5px;
+  cursor: pointer;
+}
+.editBtn {
+  padding: 6px 20px;
+  background: #00aa00;
+  color: white;
+  border-radius: 15px
+}
+.completeBtn {
+}
+.selectRatio {
+  background: #ade69b;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  margin: 10%;
+}
+.shakeAnimation {
+  animation: shake 0.4s ease-in-out 1.5;
+}
+@keyframes shake {
+  0% { transform: translateY(-5px); }
+  20% { transform: translateY(5px); }
+  50% { transform: translateY(-5px); }
+  75% { transform: translateY(5px); }
+  100% { transform: translateY(-5px); }
+}

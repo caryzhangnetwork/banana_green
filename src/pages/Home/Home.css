@@ -1,0 +1,41 @@
+.header {
+  position: relative;
+  height: 8rem;
+  margin-bottom: 30px;
+  padding: 0;
+}
+.nameTitle {
+  font-size: 1rem;
+  text-align: center;
+  background: #f9b2b2a1;
+  padding: 13px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #373535b5;
+  font-family: Gill sans-serif;
+}
+.profileContainer {
+  position: absolute;
+  right: 0;
+}
+.contentBody {
+  border: 1px solid gray;
+  margin: 3% 10%;
+  height: 500px;
+  overflow: scroll;
+}
+.quotesContainer {
+  position: absolute;
+  height: 85px;
+  width: 55%;
+  margin: 3% 0;
+  margin-left: 10%;
+}
+
+.quotesBody {
+  border: 1px solid gray;
+  height: 100%;
+  padding: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

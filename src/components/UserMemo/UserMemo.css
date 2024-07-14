@@ -1,0 +1,16 @@
+.pageTitle {
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.containerTitle {
+  margin: 0 30px;
+}
+.container {
+  border: 1px solid gray;
+  height: 300px;
+  width: 88%;
+  margin: 10px 30px;
+  padding: 10px;
+}
