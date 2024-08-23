@@ -20,6 +20,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.activeBtn {
+  background-color: yellow;
+}
+
 .clickButton:focus {
   outline: none;
 }

@@ -1,36 +1,56 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect } from 'react';
 import ProfileMenu from './ProfileMenu/ProfileMenu';
+import { getUserProfile } from '../../apis/userApis'
+import { updateQuote } from '../../redux/userSlice';
 import { Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 import './Home.css';
 export const profileMenuContext = createContext("");
 
 export const Home = () => {
-  const user = JSON.parse(localStorage.getItem('user')),
-  //const userQuote = useSelector((state) => state.user.quote);
+  // production
+  // useEffect(() => {
+  //   const fetchUserProfile = async () => {
+  //     const userProfile = await getUserProfile();
+  //     dispatch(updateQuote(userProfile.quotes))
+  //   };
+  //   fetchUserProfile(); 
+  // },[]);
+  const dispatch = useDispatch(),
+  user = JSON.parse(localStorage.getItem('user')),
+  userQuote = useSelector((state) => state.user.quote),
 
-  profileItems = [{
-    id: 1,
+  profileItems = [
+    {
+      id: 1,
+      itemName: '日历',
+      linkUrl: '/home/calendar',
+      rotation: 135,
+      isMenuItem: true
+    }, 
+    {
+      id: 2,
+      itemName: '记事', 
+      linkUrl: '/home/usermemo',
+      rotation: 315,
+      isMenuItem: true
+    }, {
+    id: 3,
     itemName: '任务',
     linkUrl: '/home/itemlist',
-    rotation: 45
-  }, {
-    id: 2,
-    itemName: '事务', 
+    rotation: 45,
+    isMenuItem: true
+  },
+  {
+    id: 4,
+    itemName: '小任务',
     linkUrl: '/home/itemdetail',
-    rotation: 135
-  }, {
-    id: 3,
-    itemName: '记事',
-    linkUrl: '/home/usermemo',
-    rotation: 225
-  }, {
-    ud: 4,
-    itemName: '日历',
-    linkUrl: '',
-    rotation: 315
-  }];
+    rotation: 135,
+    isMenuItem: false
+  }
+  ];
 
   return (
     <profileMenuContext.Provider value={profileItems}>
@@ -42,9 +62,8 @@ export const Home = () => {
           </div>
           
           <div className="quotesContainer">
-            <div className="quotesTitle">我相信...</div>
             <div className="quotesBody">
-              {/* {userQuote} */}
+              {userQuote}
             </div>
           </div>
         </div>

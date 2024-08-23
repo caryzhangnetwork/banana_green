@@ -1,39 +1,43 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { profileMenuContext } from "../..//pages/Home/Home";
 import { useNavigate } from 'react-router-dom';
 import { updateProfileIndex } from '../../redux/menuSlice';
 import { useDispatch } from 'react-redux';
+import { getTasks, deleteTask } from '../../apis/taskApis'
+
+
 import './ItemList.css';
 
 export const ItemList = () => {
-  const [itemList, setItemList] = useState([]),
-  profileItems = useContext(profileMenuContext),
+
+  
+  const [itemList, setItemList] = useState([]);
+
+  useEffect(() => {
+    const asyncFn = async () => { 
+      const allTask = await getTasks()
+      setItemList(allTask);
+    };
+    asyncFn();
+  }, []);
+
+  const profileItems = useContext(profileMenuContext),
   navigate = useNavigate(),
   dispatch = useDispatch(),
   maximum = 6,
 
-  handleAddItem = () => {
-    const navigateIdx = 1
-    navigate(profileItems[navigateIdx].linkUrl + '/true')
+  handleNavToDetail = async (idParam) => {
+    const navigateIdx = 3;
+    navigate(profileItems[navigateIdx].linkUrl + '/' + idParam)
     dispatch(updateProfileIndex(navigateIdx))
-
-    // need api, remove add and return a new list as response
-    setItemList([ 
-      ...itemList, 
-      {
-        key: itemList.length + 1, 
-        priority: itemList.length + 1, 
-        percentage: 0, 
-        isDeleteSelect: false
-      }
-    ])
   },
 
-  handleDeleteBtnSwitcher = (key) => {
+  handleDeleteBtnSwitcher = (e, id) => {
+    e.stopPropagation();
     const updatedItemList = itemList.map(item => {
-      if (item.key === key) {
+      if (item.id === id) {
         return {
           ...item,
           isDeleteSelect: !item.isDeleteSelect
@@ -44,21 +48,24 @@ export const ItemList = () => {
     setItemList(updatedItemList);
   },
 
-  handleDeleteBtn = (key) => {
+  handleDeleteBtn = async (e, id) => {
+    e.stopPropagation();
     // need api, remove add and return a new list as response
-    const updatedItemList = itemList.filter(item => item.key !== key);
-    setItemList(updatedItemList);  
+    const newTaskList = await deleteTask(id)
+    console.log("newTaskList ", newTaskList)
+    setItemList(newTaskList);  
   },
 
   renderRemoveBtn = (item) => {
+    console.log(item)
     if (!item.isDeleteSelect) {
-      return <div className='itemRemoveBtn removeBtn' onMouseDown={() => handleDeleteBtnSwitcher(item.key)}> - </div>
+      return <div className='itemRemoveBtn removeBtn' onMouseDown={(e) => handleDeleteBtnSwitcher(e, item.id)}> - </div>
     } else {
       return <div>
-        <div className='itemRemoveBtn confirmRemoveBtn ' onMouseDown={() => handleDeleteBtn(item.key)}> 
+        <div className='itemRemoveBtn confirmRemoveBtn ' onMouseDown={(e) => handleDeleteBtn(e, item.id)}> 
           <FontAwesomeIcon style={{ fontSize: '12px' }} icon={faTrash} />
         </div>
-        <div className='itemRemoveBtn cancelRemoveBtn' onMouseDown={() => handleDeleteBtnSwitcher(item.key)}> - </div>
+        <div className='itemRemoveBtn cancelRemoveBtn' onMouseDown={(e) => handleDeleteBtnSwitcher(e, item.id)}> - </div>
       </div>
     }
   },
@@ -66,9 +73,11 @@ export const ItemList = () => {
 
   renderItemList = () => {
     return itemList.map(item => {
-      return <div className='item' key={item.key}>
-        {item.priority} -
-        {`${item.percentage}%`}
+      return <div 
+        className='item' 
+        key={item.id}
+        onMouseDown={() => handleNavToDetail(item.id)}>
+        {item.name} 
         {renderRemoveBtn(item)}
       </div>
     })
@@ -76,7 +85,7 @@ export const ItemList = () => {
 
   return (
     <>
-      <div className={`${itemList.length < maximum ? 'btnEnable' : 'btnDisable'} item`} onMouseDown={handleAddItem} >新任务</div>
+      <div className={`${itemList.length < maximum ? 'btnEnable' : 'btnDisable'} item`} onMouseDown={() => handleNavToDetail('-1')} >新任务</div> 
       {
         renderItemList()
       }

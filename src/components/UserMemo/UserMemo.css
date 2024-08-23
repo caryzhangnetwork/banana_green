@@ -9,8 +9,22 @@
 }
 .container {
   border: 1px solid gray;
-  height: 300px;
-  width: 88%;
+  height: 200px;
+  width: 80%;
   margin: 10px 30px;
   padding: 10px;
+  overflow:scroll;
+}
+
+.editBtn {
+  width: 20px;
+  height: 20px;
+  background: #00aa00;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 6px 20px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }

@@ -17,14 +17,17 @@ const ProfileMenu = () => {
   revertRotateAnimation = { transform: `rotate(-${rotation}deg)`, transition: 'transform 1s ease' };
 
   useEffect(() => {
-    const param = profileItems[profileIndex].id === 2 ? '/false' : '';
-    navigate(profileItems[profileIndex].linkUrl + param); 
+    if (profileItems[profileIndex].isMenuItem) {
+      navigate(profileItems[profileIndex].linkUrl); 
+    }
   }, [navigate]);
 
-  //update rotation base on profileIndex changed
+  // update rotation base on profileIndex changed
   useEffect(() => {
-    const newRotation = profileItems[profileIndex].rotation;
-    setRotation(newRotation);
+    if (profileItems[profileIndex].isMenuItem) {
+      const newRotation = profileItems[profileIndex].rotation;
+      setRotation(newRotation);
+    }
   }, [profileIndex]);
 
   const renderItemList = () => {
@@ -33,7 +36,7 @@ const ProfileMenu = () => {
       style={rotateAnimation}>
       {
         profileItems.map((item, idx) => {
-          return <div className={`button${idx + 1} cirvle-angle-btn`} key={item.itemName}>
+          return <div className={`button${idx + 1} cirvle-angle-btn ${idx === profileIndex ? 'activeBtn' : null}`} key={item.itemName}>
             <span style={revertRotateAnimation}>{item.itemName}</span>
           </div>
         })
@@ -42,12 +45,15 @@ const ProfileMenu = () => {
   }
 
   const handleMouseDown = () => {
-    const currentIdx = profileIndex + 1 < profileItems.length ? profileIndex + 1 : 0,
-    param = profileItems[currentIdx].id === 2 ? '/false' : '';
-    setRotation(profileItems[currentIdx].rotation); // 更新旋转角度
+    const menuItems = profileItems.filter(item => item.isMenuItem)
+    const currentIdx = profileIndex + 1 < menuItems.length ? profileIndex + 1 : 0;
     dispatch(updateProfileIndex(currentIdx))
 
-    navigate(profileItems[currentIdx].linkUrl + param)
+    if (menuItems[currentIdx].isMenuItem) {
+
+      navigate(menuItems[currentIdx].linkUrl)
+    }
+
   };
 
   return (
